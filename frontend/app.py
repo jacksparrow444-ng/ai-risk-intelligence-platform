@@ -3,11 +3,12 @@ import requests
 import pandas as pd
 from datetime import datetime
 import time
+import os
 
 # Configure page
 st.set_page_config(page_title="AI Risk Manager", page_icon="🛡️", layout="wide")
 
-API_URL = "http://localhost:8000/api/v1/transactions"
+API_URL = os.getenv("API_URL", "http://localhost:8000/api/v1/transactions")
 
 st.title("🛡️ AI-Powered Risk Intelligence Platform")
 st.info("👉 Hybrid AI + Rule-Based Risk Engine (Real-Time Decisioning)")
