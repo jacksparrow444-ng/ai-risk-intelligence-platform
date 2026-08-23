@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime
+from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, text
 from sqlalchemy.orm import declarative_base, sessionmaker
 from datetime import datetime, timezone
 import uuid
@@ -24,8 +24,17 @@ class Transaction(Base):
     decision = Column(String, nullable=True)
     confidence = Column(String, nullable=True)
     reasoning = Column(String, nullable=True)
+    next_action = Column(String, nullable=True)
 
 Base.metadata.create_all(bind=engine)
+
+# Safe SQLite migration for existing tables
+try:
+    with engine.connect() as con:
+        con.execute(text("ALTER TABLE transactions ADD COLUMN next_action VARCHAR"))
+        con.commit()
+except Exception:
+    pass # Column already exists or table doesn't exist yet
 
 # Dependency
 def get_db():

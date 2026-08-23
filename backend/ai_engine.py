@@ -63,6 +63,7 @@ Your task:
 2. Adjust the risk score intelligently (0–100).
 3. Provide a final decision: ALLOW, REVIEW, or BLOCK.
 4. Give clear, specific reasoning (no generic statements).
+5. Suggest a recommended next action for the system.
 
 Strictly return JSON in this format:
 
@@ -70,6 +71,7 @@ Strictly return JSON in this format:
   "risk_score": int,
   "decision": "ALLOW" | "REVIEW" | "BLOCK",
   "confidence": "LOW" | "MEDIUM" | "HIGH",
+  "next_action": "e.g., Require OTP verification, Temporarily freeze account",
   "reasons": [
     "Reason 1",
     "Reason 2",
@@ -127,6 +129,7 @@ Rules:
             "risk_score": int(result.get("risk_score", 50)),
             "decision": result.get("decision", "BLOCK"),
             "confidence": result.get("confidence", "MEDIUM"),
+            "next_action": result.get("next_action", "Manual Review Required"),
             "reasoning": reasoning_str
         }
     except Exception as e:
@@ -163,6 +166,7 @@ Rules:
                 "risk_score": 88,
                 "decision": "BLOCK",
                 "confidence": "HIGH",
+                "next_action": "Temporarily freeze account",
                 "reasoning": reasoning
             }
         else:
@@ -177,6 +181,7 @@ Rules:
                 "risk_score": 12,
                 "decision": "ALLOW",
                 "confidence": "HIGH",
+                "next_action": "Proceed normally",
                 "reasoning": reasoning
             }
 

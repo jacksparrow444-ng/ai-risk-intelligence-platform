@@ -26,6 +26,7 @@ def process_transaction(transaction: TransactionCreate, db: Session = Depends(ge
         risk_score=ai_result["risk_score"],
         decision=ai_result["decision"],
         confidence=ai_result.get("confidence", "MEDIUM"),
+        next_action=ai_result.get("next_action", "Manual Review Required"),
         reasoning=ai_result["reasoning"]
     )
     

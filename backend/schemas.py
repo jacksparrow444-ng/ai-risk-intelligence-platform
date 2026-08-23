@@ -18,6 +18,7 @@ class TransactionResponse(BaseModel):
     risk_score: float
     decision: str
     confidence: Optional[str] = "MEDIUM"
+    next_action: Optional[str] = "Manual Review Required"
     reasoning: str
 
     class Config:
